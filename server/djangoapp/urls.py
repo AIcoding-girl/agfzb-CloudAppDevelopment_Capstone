@@ -14,16 +14,19 @@ urlpatterns = [
     # path for contact us view
     path(route='contact', view=views.contact, name='contact'),
     # path for registration
-    path('registration/', view=views.registration_request, name='registration'),
+    path('registration/', views.registration_request, name='registration'),
     # path for login
-    path('login/', view=views.login_request, name='login'),
+    path('login/', views.login_request, name='login'),
     # path for logout
-    path('logout/', view=views.logout_request, name='logout'),
-
-    path(route='', view=views.get_dealerships, name='index'),
+    path('logout/', views.logout_request, name='logout'),
 
     # path for dealer reviews view
-
+    path(route='', view=views.get_dealerships, name='index'),
+    path(route='dealer/<int:dealer_id>/', view=views.get_dealer_details, name='dealer_details'),
+    
     # path for add a review view
+    path(route='add_review/<int:dealer_id>/', view=views.add_review, name='add_review'),
+    
+    # path(route='store_review/<int:dealer_id>/', view=views.post_store_review, name='store_review'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
