@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
 # from .restapis import related methods
-from.restapis import get_dealers_from_cf, get_dealer_reviews_from_cf # store_review
+from.restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, store_review
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -78,7 +78,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = ""
+        url = "https://eritasapp.eu-gb.mybluemix.net/api/dealership"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name
@@ -112,20 +112,20 @@ def add_review(request, dealer_id):
     context['dealer_id'] = dealer_id
     return render(request, 'djangoapp/add_review.html', context)
 
-# def post_store_review(request, dealer_id):
-#     print("-------------------------------")
-#     print(type(request))
-#     print("-------------------------------")
-#     url = ""
-#     payload = {}
-#     if request.method == "POST":
-#         payload['name'] = request.POST['name']
-#         payload['dealership'] = request.POST['dealership']
-#         payload['review'] = request.POST['review']
-#         payload['purchase'] = request.POST['purchase']
-#         payload['purchase_date'] = request.POST['purchase_date']
-#         payload['car_make'] = request.POST['car_make']
-#         payload['car_model'] = request.POST['car_model']
-#         payload['car_year'] = request.POST['car_year']
-#         store_review(url, payload)
-#     return redirect('djangoapp:dealer_details', dealer_id = dealer_id)
+def post_store_review(request, dealer_id):
+    print("-------------------------------")
+    print(type(request))
+    print("-------------------------------")
+    url = "https://eritasapp.eu-gb.mybluemix.net/api/review-post"
+    payload = {}
+    if request.method == "POST":
+        payload['name'] = request.POST['name']
+        payload['dealership'] = request.POST['dealership']
+        payload['review'] = request.POST['review']
+        payload['purchase'] = request.POST['purchase']
+        payload['purchase_date'] = request.POST['purchase_date']
+        payload['car_make'] = request.POST['car_make']
+        payload['car_model'] = request.POST['car_model']
+        payload['car_year'] = request.POST['car_year']
+        store_review(url, payload)
+    return redirect('djangoapp:dealer_details', dealer_id = dealer_id)

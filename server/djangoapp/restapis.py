@@ -93,7 +93,9 @@ def get_dealer_reviews_from_cf(url, **kwargs):
 
 # def store_review(url, payload):
 #     post_request(url, payload=payload)
-
+def store_review(url, payload):
+    post_request(url, payload=payload)
+    
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
 # def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
